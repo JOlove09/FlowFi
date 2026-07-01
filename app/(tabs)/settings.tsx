@@ -3,19 +3,10 @@ import {
   StyleSheet,
   Switch,
   Text,
-  TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
 
-import {
-  useContext,
-  useState,
-} from "react";
-
-import {
-  ExpenseContext,
-} from "../context/ExpenseContext";
+import { useContext } from "react";
 
 import {
   NotificationContext,
@@ -23,30 +14,11 @@ import {
 
 export default function SettingsScreen() {
 
-  // =========================
-  // EXPENSE CONTEXT
-  // =========================
-
-  const expenseContext =
-    useContext(ExpenseContext);
-
   const notificationContext =
     useContext(NotificationContext);
 
-  if (
-    !expenseContext ||
-    !notificationContext
-  )
+  if (!notificationContext)
     return null;
-
-  const {
-    budget,
-    setBudget,
-  } = expenseContext;
-
-  // =========================
-  // NOTIFICATION CONTEXT
-  // =========================
 
   const {
 
@@ -68,30 +40,6 @@ export default function SettingsScreen() {
 
   } = notificationContext;
 
-  // =========================
-  // LOCAL STATE
-  // =========================
-
-  const [input, setInput] =
-    useState(
-      budget.toString()
-    );
-
-  // =========================
-  // SAVE BUDGET
-  // =========================
-
-  const handleSave = () => {
-
-    const value =
-      Number(input);
-
-    if (!isNaN(value)) {
-
-      setBudget(value);
-    }
-  };
-
   return (
 
     <ScrollView
@@ -101,46 +49,6 @@ export default function SettingsScreen() {
       }}
       showsVerticalScrollIndicator={false}
     >
-
-      {/* ========================= */}
-      {/* BUDGET SECTION */}
-      {/* ========================= */}
-
-      <View style={styles.card}>
-
-        <Text style={styles.title}>
-          Monthly Budget
-        </Text>
-
-        <TextInput
-          value={input}
-          onChangeText={setInput}
-          keyboardType="numeric"
-          placeholder="Enter budget"
-          style={styles.input}
-        />
-
-        <TouchableOpacity
-          style={styles.button}
-          onPress={handleSave}
-        >
-
-          <Text style={styles.buttonText}>
-            Save Budget
-          </Text>
-
-        </TouchableOpacity>
-
-        <Text style={styles.current}>
-          Current Budget:
-          ₹{budget.toLocaleString()}
-        </Text>
-
-      </View>
-
-      {/* ========================= */}
-      {/* NOTIFICATION SETTINGS */}
-      {/* ========================= */}
 
       <View style={styles.card}>
 
@@ -157,17 +65,13 @@ export default function SettingsScreen() {
           </Text>
 
           <Switch
-            value={
-              notificationsEnabled
-            }
-            onValueChange={
-              setNotificationsEnabled
-            }
+            value={notificationsEnabled}
+            onValueChange={setNotificationsEnabled}
           />
 
         </View>
 
-        {/* 50 */}
+        {/* 50% */}
 
         <View style={styles.settingRow}>
 
@@ -177,14 +81,12 @@ export default function SettingsScreen() {
 
           <Switch
             value={warning50}
-            onValueChange={
-              setWarning50
-            }
+            onValueChange={setWarning50}
           />
 
         </View>
 
-        {/* 80 */}
+        {/* 80% */}
 
         <View style={styles.settingRow}>
 
@@ -194,14 +96,12 @@ export default function SettingsScreen() {
 
           <Switch
             value={warning80}
-            onValueChange={
-              setWarning80
-            }
+            onValueChange={setWarning80}
           />
 
         </View>
 
-        {/* 100 */}
+        {/* 100% */}
 
         <View style={styles.settingRow}>
 
@@ -211,9 +111,7 @@ export default function SettingsScreen() {
 
           <Switch
             value={warning100}
-            onValueChange={
-              setWarning100
-            }
+            onValueChange={setWarning100}
           />
 
         </View>
@@ -221,6 +119,7 @@ export default function SettingsScreen() {
       </View>
 
     </ScrollView>
+
   );
 }
 
@@ -239,9 +138,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
 
     shadowColor: "#000",
-
     shadowOpacity: 0.05,
-
     shadowRadius: 14,
 
     shadowOffset: {
@@ -252,45 +149,10 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
 
-  title: {
-    fontSize: 30,
-    fontWeight: "700",
-    marginBottom: 20,
-  },
-
   sectionTitle: {
     fontSize: 28,
     fontWeight: "700",
     marginBottom: 24,
-  },
-
-  input: {
-    borderWidth: 1,
-    borderColor: "#D1D5DB",
-    borderRadius: 18,
-    padding: 16,
-    fontSize: 20,
-    marginBottom: 20,
-    backgroundColor: "#fff",
-  },
-
-  button: {
-    backgroundColor: "#19C59D",
-    padding: 18,
-    borderRadius: 18,
-    alignItems: "center",
-  },
-
-  buttonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "700",
-  },
-
-  current: {
-    marginTop: 24,
-    fontSize: 18,
-    color: "#475569",
   },
 
   settingRow: {
@@ -306,4 +168,5 @@ const styles = StyleSheet.create({
     flex: 1,
     marginRight: 10,
   },
+
 });

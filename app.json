@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "finance-app",
-    "slug": "finance-app",
+    "name": "FlowFi",
+    "slug": "flowfi",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -43,6 +43,19 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "owner": "jo_love",
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "6eff6265-b2fd-418e-ba2f-6a174f49ee9c"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/6eff6265-b2fd-418e-ba2f-6a174f49ee9c"
     }
   }
 }

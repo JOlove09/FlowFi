@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import {
+  Alert,
   Image,
   Platform,
   ScrollView,
@@ -10,6 +11,7 @@ import {
   View,
 } from "react-native";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFonts } from "expo-font";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Notifications from "expo-notifications";
@@ -18,6 +20,9 @@ import * as Speech from "expo-speech";
 import { Mic } from "lucide-react-native";
 import FloatingAI from "../../components/FloatingAI";
 import { useExpense } from "../context/ExpenseContext";
+
+const BUDGET_KEY = "budget";
+const INCOME_KEY = "income";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => {
@@ -42,9 +47,41 @@ export default function HomeScreen() {
   const router = useRouter();
   
 
-  const [budget, setBudget] = useState("20000");
+  const [budget, setBudget] = useState("0");
 
-  const [income, setIncome] = useState("35000");
+  const [income, setIncome] = useState("0");
+
+  useEffect(() => {
+
+  const loadFinance = async () => {
+
+    try {
+
+      const savedBudget =
+        await AsyncStorage.getItem(BUDGET_KEY);
+
+      const savedIncome =
+        await AsyncStorage.getItem(INCOME_KEY);
+
+      if (savedBudget) {
+        setBudget(savedBudget);
+      }
+
+      if (savedIncome) {
+        setIncome(savedIncome);
+      }
+
+    } catch (err) {
+
+      console.log("Load finance error:", err);
+
+    }
+
+  };
+
+  loadFinance();
+
+}, []);
 
   const [editingBudget, setEditingBudget] = useState(false);
 
@@ -109,13 +146,20 @@ export default function HomeScreen() {
   }, []);
 
   // BUDGET EXCEEDED ALERT
-  useEffect(() => {
+useEffect(() => {
 
-    async function sendBudgetAlert() {
+  async function sendBudgetAlert() {
 
-      if (Platform.OS === "web") return;
+    if (budgetPercent >= 100) {
 
-      if (budgetPercent >= 100) {
+      if (Platform.OS === "web") {
+
+        Alert.alert(
+          "Budget Exceeded 🚨",
+          "Your expenses have exceeded your monthly budget."
+        );
+
+      } else {
 
         await Notifications.scheduleNotificationAsync({
           content: {
@@ -126,11 +170,14 @@ export default function HomeScreen() {
         });
 
       }
+
     }
 
-    sendBudgetAlert();
+  }
 
-  }, [budgetPercent]);
+  sendBudgetAlert();
+
+}, [budgetPercent]);
 
   const categoryTotals = useMemo(() => {
 
@@ -535,9 +582,20 @@ setUserMessage("");
           }
 
           <TouchableOpacity
-            style={styles.editBtn}
-            onPress={() => setEditingBudget(!editingBudget)}
-          >
+        style={styles.editBtn}
+        onPress={async () => {
+
+          if (editingBudget) {
+            await AsyncStorage.setItem(
+              BUDGET_KEY,
+              budget
+            );
+          }
+
+          setEditingBudget(!editingBudget);
+
+        }}
+      >
 
             <Text style={styles.editBtnText}>
               {editingBudget ? "Save" : "Edit"}
@@ -576,7 +634,18 @@ setUserMessage("");
 
           <TouchableOpacity
             style={styles.editBtn}
-            onPress={() => setEditingIncome(!editingIncome)}
+            onPress={async () => {
+
+              if (editingIncome) {
+                await AsyncStorage.setItem(
+                  INCOME_KEY,
+                  income
+                );
+              }
+
+              setEditingIncome(!editingIncome);
+
+            }}
           >
 
             <Text style={styles.editBtnText}>
