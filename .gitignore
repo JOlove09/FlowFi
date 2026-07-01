@@ -1,0 +1,133 @@
+# =====================================
+# Node.js / React Native / Expo
+# =====================================
+
+node_modules/
+.expo/
+.expo-shared/
+dist/
+web-build/
+expo-env.d.ts
+
+# Metro
+.metro-health-check*
+
+# Native build folders
+/android
+/ios
+
+# Build outputs
+build/
+coverage/
+
+# =====================================
+# Python / Flask
+# =====================================
+
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+.venv-1/
+.venv-2/
+.venv-3/
+venv/
+env/
+ENV/
+finalvenv/
+
+# =====================================
+# Environment variables
+# =====================================
+
+.env
+.env.*
+!.env.example
+
+# =====================================
+# Logs
+# =====================================
+
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =====================================
+# TypeScript
+# =====================================
+
+*.tsbuildinfo
+
+# =====================================
+# macOS
+# =====================================
+
+.DS_Store
+
+# =====================================
+# Windows
+# =====================================
+
+Thumbs.db
+Desktop.ini
+
+# =====================================
+# VS Code
+# =====================================
+
+.vscode/
+
+# =====================================
+# Git
+# =====================================
+
+*.orig
+
+# =====================================
+# Security / Certificates
+# =====================================
+
+*.pem
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# =====================================
+# Kotlin
+# =====================================
+
+.kotlin/
+
+# =====================================
+# Example app
+# =====================================
+
+app-example/
+
+# Python virtual environments
+finalenv/
+venv310/
+
+# Python datasets and experiments
+ml_experiments/
+
+# Debug images
+debug.jpg
+debug_receipt.jpg
+incoming.jpg
+
+# Ngrok
+ngrok.exe
+ngrok-v3-stable-windows-amd64.zip
+
+# Google service account key
+key.json
+
+dataset/
